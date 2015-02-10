@@ -91,7 +91,7 @@ $S = \emptyset, t = T$
 #### Revised Algorithm:
 ```
 [same init]
-bb
+
 For j = 1 to n:
     For t = 1 to T:
         if opt(j-1,t).val \geq v_{j} + opt(j-1, t-w_{j}).val, then:
