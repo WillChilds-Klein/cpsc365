@@ -10,4 +10,4 @@ all: $(OBJS)
 	${EXEC} ${FLAGS} -o $@ $^
 
 clean:
-	rm -f *.o *.dSYM *.pdf .DS_Stores
+	rm -f *.o *.dSYM *notes*15.pdf .DS_Stores
