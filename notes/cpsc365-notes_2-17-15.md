@@ -37,7 +37,7 @@ $$ \leq 2c(\frac{n}{2})log_{2}(\frac{n}{2}) + cn \space\space\space\space(by \sp
 $$ = cn(log_{2}(n) - 1) + cn $$
 $$ = cnlog_{2}(n) - cn + cn = cnlog_{2}(n) $$  
 
-Example
+Example 
 -------
 My rank: d a c b e  
 --James: c a e d b  
