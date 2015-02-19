@@ -1,31 +1,30 @@
-2/10/15: Divide & Conquer
+2/17/15: Divide & Conquer
 =========================
   1. divide into sub-problems (barely overlapping)
   2. combine together  
 
 MergeSort
 ---------
-for even $n$,   
 def $Merge(c_{1}, ..., c_{m}, d_{1}, .., d_{n})$:  
-  $i=1, j=1$  
-  while $(i \leq m$ and $j \leq n)$:  
-    if $c_{i} \leq d_{j}$:  
-      append $c_{i}$ to $b$  
-      $i = i + 1$
-    else  
-      append $d_{j}$ to $b$  
-      $j = j + 1$  
-  if $i = m + 1$:
-    append $d_{j},...,d_{n}$ to b  
-  else  
-    append $c_{i},...,c_{m}$ to $b$  
+>  $i=1, j=1$  
+>  while $(i \leq m$ and $j \leq n)$:  
+>>  if $c_{i} \leq d_{j}$:  
+>>>   append $c_{i}$ to $b$  
+>>>   $i = i + 1$
+>>  else  
+>>>   append $d_{j}$ to $b$  
+>>>   $j = j + 1$  
+>  if $i = m + 1$:
+>>   append $d_{j},...,d_{n}$ to b  
+>  else  
+>>   append $c_{i},...,c_{m}$ to $b$  
 
 def $MergeSort(a_{1},...,a_{n})$:  
-  if $n-2$:  
-    **return** $sort(a_{1}, a_{2})$  
-  $c_{1},...,c_{\frac{n}{2}} = MergeSort(a_{1},...,a_{\frac{n}{2}})$  
-  $d_{1},...,d_{\frac{n}{2}} = MergeSort(a_{\frac{n}{2}},...,a_{n})$  
-  **return** $Merge(c,d)$
+>  if $n-2$:  
+>>   **return** $sort(a_{1}, a_{2})$  
+>  $c_{1},...,c_{\frac{n}{2}} = MergeSort(a_{1},...,a_{\frac{n}{2}})$  
+>  $d_{1},...,d_{\frac{n}{2}} = MergeSort(a_{\frac{n}{2}},...,a_{n})$  
+>  **return** $Merge(c,d)$
 
 **Time:** $O(n + m)$  
 

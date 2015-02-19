@@ -1,0 +1,51 @@
+<h1 id="divide-conquer">2/17/15: Divide &amp; Conquer</h1>
+<ol style="list-style-type: decimal">
+<li>divide into sub-problems (barely overlapping)</li>
+<li>combine together</li>
+</ol>
+<h2 id="mergesort">MergeSort</h2>
+<pre class="math"><code>for even $n$,   
+def $Merge(c_{1}, ..., c_{m}, d_{1}, .., d_{n})$:  
+  $i=1, j=1$  
+  while $(i \leq m$ and $j \leq n)$:  
+    if $c_{i} \leq d_{j}$:  
+      append $c_{i}$ to $b$  
+      $i = i + 1$
+    else  
+      append $d_{j}$ to $b$  
+      $j = j + 1$  
+  if $i = m + 1$:
+    append $d_{j},...,d_{n}$ to b  
+  else  
+    append $c_{i},...,c_{m}$ to $b$  
+
+def $MergeSort(a_{1},...,a_{n})$:  
+  if $n-2$:  
+    **return** $sort(a_{1}, a_{2})$  
+  $c_{1},...,c_{\frac{n}{2}} = MergeSort(a_{1},...,a_{\frac{n}{2}})$  
+  $d_{1},...,d_{\frac{n}{2}} = MergeSort(a_{\frac{n}{2}},...,a_{n})$  
+  **return** $Merge(c,d)$</code></pre>
+<p><strong>Time:</strong> <span class="math">\(O(n + m)\)</span></p>
+<p>Prove by induction that <span class="math">\(T(n) \leq cnlog_{2}(n)\)</span><br />Base <span class="math">\(n=2\)</span>, we know <span class="math">\(T(2) \leq c \leq c2log_{2}(n) = c\)</span><br />Induction: assume True for <span class="math">\(\frac{n}{2}\)</span><br /><span class="math">\[ T(n) \leq 2T(\frac{n}{2}) + cn \]</span> <span class="math">\[ \leq 2c(\frac{n}{2})log_{2}(\frac{n}{2}) + cn \space\space\space\space(by \space induction)\]</span> <span class="math">\[ = cn(log_{2}(n) - 1) + cn \]</span> <span class="math">\[ = cnlog_{2}(n) - cn + cn = cnlog_{2}(n) \]</span></p>
+<h2 id="example">Example</h2>
+<p>My rank: d a c b e<br />--James: c a e d b</p>
+<p>count # of inversions - pairs out of order: <em>5 inversions</em><br />rename s.t. my order is <span class="math">\(1,2,3,...\)</span> and other order is <span class="math">\(a_{1},a_{2},...\)</span></p>
+<p>My rank: 1 2 3 4 5<br />--James: 3 2 5 1 4</p>
+<p><span class="math">\[ w = CountInversions(a_{1},...,a_{n}) \]</span> <span class="math">\[ x = CountInv(a_{1},...,a_{\frac{n}{2}}) \]</span> <span class="math">\[ y = CountInv(a_{\frac{n}{2}+1},...,a_{n}) \]</span> <span class="math">\[ z = CountCrossInv(a_{1},...,a_{\frac{n}{2}},a_{\frac{n}{2}+1},...,a_{n}) \]</span> <span class="math">\[ w = x + y + z \]</span><br />a cross-inversion is an <span class="math">\(i \leq \frac{n}{2}, j &gt; \frac{n}{2}\)</span> with <span class="math">\(a_{i} &gt; a_{j}\)</span></p>
+<h2 id="closest-pair">Closest Pair</h2>
+<p><strong>Input:</strong> <span class="math">\((x_{1}),y_{1}),...,(x_{n},y_{n})\)</span><br /> find <span class="math">\(i\)</span> and <span class="math">\(j\)</span> s.t. <span class="math">\(dist((x_{i},y_{i}),(x_{j},y_{j}))\)</span> is as small as possible<br /> assume <span class="math">\(x_{i}\)</span>'s are distinct</p>
+<p>Can compare all pairs in <span class="math">\(O(n^2)\)</span>, but we'll do it in <span class="math">\(O(n \space log(n))\)</span></p>
+<p>Divide plane into right <span class="math">\((R)\)</span> and left <span class="math">\((L)\)</span><br /> 1. sort so <span class="math">\(x_1 &lt; x_2 &lt; ... &lt; x_n\)</span><br /> 2. set <span class="math">\(L = \{1,...,\frac{n}{2}\}\)</span>, <span class="math">\(R = \{\frac{n}{2}+1,...,n\}\)</span><br /> 3. Find closest pair in <span class="math">\(L\)</span>. Let <span class="math">\(\delta_L\)</span> be its distance.<br /> 4. Find closest pair in <span class="math">\(R\)</span>. Let <span class="math">\(\delta_R\)</span> be its distance.<br /> 5. <span class="math">\(\delta = min(\delta_L,\delta_R)\)</span><br /> 6. will find closes <span class="math">\(L\)</span>/<span class="math">\(R\)</span> pair if its distance is <span class="math">\(&lt; \delta\)</span></p>
+<p>Idea:<br /> - we only need to look at points withing <span class="math">\(\delta\)</span> of the center line.<br /> - we only need to compare <span class="math">\(L/R\)</span> pairs within <span class="math">\(\delta\)</span> of y-coordinate.<br /> - Sort points on y-coordinates.<br /> - For each point in <span class="math">\(L\)</span>, only need to compare to the 10 points in <span class="math">\(R\)</span> with closest y-coordinates<br /> - So, takes linear time to compare <span class="math">\(L\)</span> and <span class="math">\(R\)</span>.</p>
+<p>Explanation:<br /> - at most 1 point per box. - For every point on left, are at most 10 boxes on right with points at distance <span class="math">\(\leq \delta\)</span><br /> - after sort, linear time to scan 10 proximal boxes, but sort take <span class="math">\(log(n)\)</span><br /> - <span class="math">\(T(n) \leq 2T(\frac{n}{2}) + c \space n \space log_2(n)\)</span><br /> - get <span class="math">\(\space T(n) \leq c&#39; n(log_2(n))^2)\)</span><br /> - Can sort on y-coordinates up front (pay <span class="math">\(n\space log \space n\)</span> once), and then keep track of order when split.<br /> - <span class="math">\(T(n) \leq 2T(\frac{n}{2}) + c \space n\)</span></p>
+<h2 id="test-on-22415">Test on 2/24/15</h2>
+<ul>
+<li>test will be split into 2 rooms<br /></li>
+<li>content
+<ul>
+<li>memorization-heavy</li>
+<li>3 problems, pretty much straight out of class or PSETS</li>
+<li>memorize problems from PSETS and class<br /></li>
+<li>follow directions carefully, test is one thing where no name is on every page. only first.</li>
+</ul></li>
+</ul>
