@@ -1,13 +1,16 @@
 EXEC = pandoc
-FLAGS = --mathjax
+FLAGS = --mathjax -s --template="/Users/will/.pandoc/templates/cpsc365-template.tex"
 SRCS = $(wildcard *.md)
-OBJS = $(patsubst %.md,%.pdf,$(SRCS))
+OBJS = $(patsubst %.md,%.md.pdf,$(SRCS))
 
 
 all: $(OBJS)
 
-%.pdf: %.md
+%.md.pdf: %.md
 	${EXEC} ${FLAGS} -o $@ $^
 
+%: %.md
+	${EXEC} ${FLAGS} -o $@.md.pdf $^ && open -a Preview $@.md.pdf
+
 clean:
-	rm -f *.o *.dSYM *.pdf .DS_Stores
+	rm -f *.o *.dSYM *.md.pdf .DS_Stores
