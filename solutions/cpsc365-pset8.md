@@ -8,8 +8,6 @@ author:
 
 
 
-
-
 # Problem 1
 
 ## Algorithm
@@ -24,16 +22,16 @@ author:
       for $j \in \{1,2,3\}$:
         $\text{cost}(i,j) = \sum\limits_{\mathclap{p \in N(i) : c(p)=j}} w(p)$
       end for
-    $c(i) = \argmin\limits_{j \in \{1,2,3\}} \text{cost}(i,j)$
+      $c(i) = \argmin\limits_{j \in \{1,2,3\}} \text{cost}(i,j)$
     end for
     return c
   end
 \end{algorithm}
 
-
-
 ## Complexity
-$$ O(n + n \log n) $$
+
+### Theorem 8.1
+$$ \text{3CG-Min-Cost-Approx is of complexity } O(n + n \log n) $$
 
 ### Proof of Complexity
 lorem ipsum dolor sit amet
@@ -41,7 +39,7 @@ lorem ipsum dolor sit amet
 
 ## Correctness
 
-### Theorem 8.1
+### Theorem 8.2
 `3CG-Min-Cost-Approx` will alsays find a color assignment $c$ whose total cost is at most
 $$ \frac{1}{3} \left( \sum\limits_{(u,v) \in E} w(u,v) \right) $$
 
@@ -52,7 +50,31 @@ $$ \frac{1}{3} \left( \sum\limits_{(u,v) \in E} w(u,v) \right) $$
 
 # Problem 2
 
+## Algorithm
 
+\begin{algorithm}[caption={3CG-Min-Cost-Randomized}, label={alg2}, mathescape={true}]
+  input: $G = (V,E,w), w: E \rightarrow \mathbb{R}^+$
+  init:
+  begin
+    let $C$ be some constant
+    let $T = \dfrac{1}{3} \sum\limits_{\mathclap{e \in E}} w$
+    for $i = 1...c$:
+      let $c$ be a uniformly random assignment of $c: v \rightarrow \{1,2,3\}, \forall v \in V$
+      if $\text{cost(c)} \leq T$
+        return c
+      endif
+    endfor
+
+    return c
+  end       
+\end{algorithm}
+
+### Complexity
+   
+
+## Correctness
+  - markov's inequality
+  - $C = 4$
 
 
 
@@ -92,11 +114,17 @@ $$ x_1 + x_2 + (1 - x_3) + c_1 \geq 1 $$
 $$ x_1 + (1 - x_2) + x_4 + c_2 \geq 1 $$
 $$ x_2 + x_3 + (1 - x_4) + c_3 \geq 1 $$
 
-through some simple algebra, we rearrange the above equations before inputting to `3SAT-ILP` as follows:
+through some simple algebra, we rearrange the above equations before inputting them into `3SAT-ILP` as follows:
 
-$$ -x_1 - x_2 - (1 - x_3) - 1 \leq c_1 \Leftrightarrow -x_1 - x_2 - 1 + x_3 - 1 \leq c_1 $$
-$$ -x_1 - (1 - x_2) + x_4 - 1 \leq c_2 \Leftrightarrow -x_1 - 1 + x_2 + x_4 - 1 \leq c_2 $$
-$$ -x_2 - x_3 - (1 - x_4) - 1 \leq c_3 \Leftrightarrow -x_2 - x_3 - 1 + x_4 - 1 \leq c_3 $$
+$$ c_1 \geq 1 - x_1 - x_2 - (1 - x_3) \Leftrightarrow -x_1 - x_2 + x_3 \leq c_1 $$
+$$ c_2 \geq 1 - x_1 - (1 - x_2) - x_4 \Leftrightarrow -x_1 + x_2 - x_4 \leq c_2 $$
+$$ c_3 \geq 1 - x_2 - x_3 - (1 - x_4) \Leftrightarrow -x_2 - x_3 + x_4 \leq c_3 $$
+
+
+
+
+
+\pagebreak
 
 
 \begin{algorithm}[caption={<NAME>}, label={alg<i>}, mathescape={true}]
